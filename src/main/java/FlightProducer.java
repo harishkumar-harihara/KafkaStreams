@@ -44,10 +44,10 @@ public class FlightProducer {
                     String dest_country_name = (String) jsonObject.get("DEST_COUNTRY_NAME");
                     int count = Integer.parseInt(jsonObject.get("count").toString());
 
-                    FlightData data = new FlightData();
-                    data.setOrigin_country_name(origin_country_name);
-                    data.setDest_country_name(dest_country_name);
-                    data.setCount(count);
+                    FlightData data = new FlightData(origin_country_name, dest_country_name, count);
+//                    data.setOrigin_country_name(origin_country_name);
+//                    data.setDest_country_name(dest_country_name);
+//                    data.setCount(count);
 
                     producer.send(new ProducerRecord<>(topicName,index,data)).get();
 
@@ -72,6 +72,6 @@ public class FlightProducer {
         flightProducer.produce(args[0]);
 
         SparkReaderFromKafka reader = new SparkReaderFromKafka();
-        reader.readStreamingDataFromKafka(args[0]);
+        reader.streamReader(args[0]);
     }
 }

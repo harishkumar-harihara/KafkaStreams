@@ -4,6 +4,12 @@ public class FlightData {
     public String dest_country_name;
     public int count;
 
+    public FlightData(String origin, String dest, int count) {
+        this.origin_country_name = origin;
+        this.dest_country_name = dest;
+        this.count = count;
+    }
+
     public String getOrigin_country_name() {
         return origin_country_name;
     }

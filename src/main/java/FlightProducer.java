@@ -51,8 +51,8 @@ public class FlightProducer {
 
                     producer.send(new ProducerRecord<>(topicName,index,data)).get();
 
-                    System.out.printf("origin=%s, destination=%s, count=%d \n",
-                            origin_country_name,dest_country_name,count);
+//                    System.out.printf("origin=%s, destination=%s, count=%d \n",
+//                            origin_country_name,dest_country_name,count);
 
                     index++;
                 } catch (ParseException | ExecutionException | InterruptedException e) {
@@ -60,6 +60,7 @@ public class FlightProducer {
                     e.printStackTrace();
                 }
             }
+            producer.close();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -68,6 +69,9 @@ public class FlightProducer {
 
     public static void main(String[] args) {
         FlightProducer flightProducer = new FlightProducer();
-        flightProducer.produce("flights");
+        flightProducer.produce(args[0]);
+
+        SparkReaderFromKafka reader = new SparkReaderFromKafka();
+        reader.readStreamingDataFromKafka(args[0]);
     }
 }
